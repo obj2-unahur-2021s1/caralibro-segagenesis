@@ -8,4 +8,8 @@ class Usuario {
   }
 
   fun espacioDePublicaciones() = publicaciones.sumBy { it.espacioQueOcupa() }
+
+  fun darLike(publicacion: Publicacion) {
+    publicacion.likes += 1
+  }
 }

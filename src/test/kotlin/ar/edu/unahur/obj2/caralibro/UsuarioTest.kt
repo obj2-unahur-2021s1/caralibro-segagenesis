@@ -5,9 +5,9 @@ import io.kotest.matchers.shouldBe
 
 class UsuarioTest : DescribeSpec({
   describe("Caralibro") {
-    val saludoCumpleanios = Texto("Felicidades Pepito, que los cumplas muy feliz")
-    val fotoEnCuzco = Foto(768, 1024)
-    val video = Video(23,CalidadSd)
+    val saludoCumpleanios = Texto("Felicidades Pepito, que los cumplas muy feliz",0)
+    val fotoEnCuzco = Foto(768, 1024,0)
+    val video = Video(23,CalidadSd, 0)
 
     describe("Una publicación") {
       describe("de tipo foto") {
@@ -41,12 +41,16 @@ class UsuarioTest : DescribeSpec({
     }
 
     describe("Un usuario") {
+      val usuarioCaralibro = Usuario()
       it("puede calcular el espacio que ocupan sus publicaciones") {
-        val usuarioCaralibro = Usuario()
         usuarioCaralibro.agregarPublicacion(fotoEnCuzco)
         usuarioCaralibro.agregarPublicacion(saludoCumpleanios)
-
-        usuarioCaralibro.espacioDePublicaciones().shouldBe(550548)
+        usuarioCaralibro.agregarPublicacion(video)
+        usuarioCaralibro.espacioDePublicaciones().shouldBe(550571)
+      }
+      it("Puede darle like a una publicación, y conocer cuántas veces fue votada de esta forma") {
+        usuarioCaralibro.darLike(fotoEnCuzco)
+        fotoEnCuzco.likes.shouldBe(1)
       }
     }
   }

@@ -2,19 +2,20 @@ package ar.edu.unahur.obj2.caralibro
 
 import kotlin.math.ceil
 
-abstract class Publicacion {
+abstract class Publicacion(var likes : Int) {
     abstract fun espacioQueOcupa(): Int
 }
 
-class Foto(val alto: Int, val ancho: Int) : Publicacion() {
+class Foto(val alto: Int, val ancho: Int, likes: Int ) : Publicacion(likes) {
   override fun espacioQueOcupa() = ceil(alto * ancho * factorCompresion.compresionActual).toInt()
+
 }
 
-class Texto(val contenido: String) : Publicacion() {
+class Texto(val contenido: String,likes: Int) : Publicacion(likes) {
   override fun espacioQueOcupa() = contenido.length
 }
 
-open class Video(val duracion: Int, var calidad: CalidadVideo ) : Publicacion() {
+open class Video(val duracion: Int, var calidad: CalidadVideo,likes: Int ) : Publicacion(likes) {
    override fun espacioQueOcupa() = calidad.espacioQueOcupa(this)
 }
 
