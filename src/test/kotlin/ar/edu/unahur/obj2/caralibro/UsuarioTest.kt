@@ -20,14 +20,35 @@ class UsuarioTest : DescribeSpec({
           saludoCumpleanios.espacioQueOcupa().shouldBe(45)
         }
       }
+
+      describe("de tipo video") {
+        describe("Ocupa espacio dependiendo su calidad de video") {
+          it("Para la calidad SD, el tamaño es igual a la duración del video en segundos") {
+            val videoEnCalidadSd = Video(23)
+            videoEnCalidadSd.espacioQueOcupaSd().shouldBe(23)
+          }
+          it("Para los videos HD 720p el tamaño es igual al triple de la duración en segundos del video") {
+            val videoEnCalidadHd720p = Video(23)
+            videoEnCalidadHd720p.espacioQueOcupaHd720p().shouldBe(69)
+          }
+          it("Para los videos de HD 1080p el tamaño es el doble de los HD 720p") {
+            val videoEnCalidadHd1080p = Video (23)
+            videoEnCalidadHd1080p.espacioQueOcupaHd1080p().shouldBe(138)
+          }
+
+        }
+
+      }
     }
 
     describe("Un usuario") {
       it("puede calcular el espacio que ocupan sus publicaciones") {
-        val juana = Usuario()
-        juana.agregarPublicacion(fotoEnCuzco)
-        juana.agregarPublicacion(saludoCumpleanios)
-        juana.espacioDePublicaciones().shouldBe(550548)
+        val usuarioCaralibro = Usuario()
+
+        usuarioCaralibro.agregarPublicacion(fotoEnCuzco)
+        usuarioCaralibro.agregarPublicacion(saludoCumpleanios)
+
+        usuarioCaralibro.espacioDePublicaciones().shouldBe(550548)
       }
     }
   }
