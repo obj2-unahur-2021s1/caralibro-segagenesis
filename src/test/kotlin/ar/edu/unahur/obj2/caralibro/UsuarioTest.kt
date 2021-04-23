@@ -2,6 +2,8 @@ package ar.edu.unahur.obj2.caralibro
 
 import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.matchers.booleans.shouldBeFalse
+import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
 
 class UsuarioTest : DescribeSpec({
@@ -50,7 +52,7 @@ class UsuarioTest : DescribeSpec({
         usuarioCaralibro.espacioDePublicaciones().shouldBe(550571)
       }
       describe("Puede darle like") {
-        it("A una publicación, y conocer cuántas veces fue votada de esta forma") {
+        it("A una publicación") {
           usuarioCaralibro.darLike(fotoEnCuzco)
           fotoEnCuzco.likes.shouldBe(1)
         }
@@ -60,6 +62,22 @@ class UsuarioTest : DescribeSpec({
         }
       }
 
+      describe("Es mas amistoso que otro.") {
+        val usuarioAmistoso = Usuario()
+        val usuarioNoAmistoso = Usuario()
+        val usuarioAmigo = Usuario()
+        val usuarioAmigo2= Usuario()
+        usuarioAmistoso.agregarAmigo(usuarioAmigo)
+        usuarioAmistoso.agregarAmigo(usuarioAmigo2)
+        usuarioNoAmistoso.agregarAmigo(usuarioAmigo)
+
+        it("Cuando el primero tiene mas amigos") {
+          usuarioAmistoso.esMasAmistosoQue(usuarioNoAmistoso).shouldBeTrue()
+        }
+        it("No lo es cuando el segundo usuario tiene mas amigos") {
+          usuarioNoAmistoso.esMasAmistosoQue(usuarioAmistoso).shouldBeFalse()
+        }
+      }
 
     }
 
@@ -72,7 +90,7 @@ class UsuarioTest : DescribeSpec({
       francisco.agregarAmigo(karen)
       francisco.agregarAmigo(matias)
 
-      it("Quien es mas amistoso que..."){
+      it("das"){
         //francisco.tieneMasAmigosQue(fernando).shouldBeTrue()
       }
     }

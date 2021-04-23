@@ -24,6 +24,10 @@ class Usuario {
         this.amigos.add(usuario)
     }
 
+    fun esMasAmistosoQue(usuario: Usuario) = this.amigos.count() > usuario.amigos.count()
+
+
+
 //    fun tieneMasAmigosQue(usuario: Usuario) {
 //        if (this.amigos.size > usuario.amigos.size) {
 //            return true
