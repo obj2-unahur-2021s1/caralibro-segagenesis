@@ -53,5 +53,22 @@ class UsuarioTest : DescribeSpec({
         fotoEnCuzco.likes.shouldBe(1)
       }
     }
+
+    describe("Usuario amistoso"){
+      val francisco = Usuario()
+      val fernando = Usuario()
+      val karen = Usuario()
+      val valentina = Usuario()
+      val alejandro = Usuario()
+
+      francisco.agregarAmigo(karen)
+      francisco.agregarAmigo(valentina)
+      fernando.agregarAmigo(alejandro)
+
+      it("Quien es mas amistoso"){
+        francisco.esMasAmistosoQue(fernando).shouldBeTrue()
+
+      }
+    }
   }
 })
