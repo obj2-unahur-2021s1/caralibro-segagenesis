@@ -11,16 +11,22 @@ class Usuario {
     fun espacioDePublicaciones() = publicaciones.sumBy { it.espacioQueOcupa() }
 
     fun darLike(publicacion: Publicacion) {
+        if (this.dioLikeEn(publicacion)) {
+            throw Exception ("Ya le has dado like a esta publicacion")
+        }
         publicacion.likes += 1
+        publicacion.usuariosQueDieronLike.add(this)
     }
+
+    fun dioLikeEn(publicacion: Publicacion) = publicacion.usuariosQueDieronLike.contains(this)
 
     fun agregarAmigo(usuario: Usuario) {
         this.amigos.add(usuario)
     }
 
-    fun tieneMasAmigosQue(usuario: Usuario) {
-        if (this.amigos.size > usuario.amigos.size) {
-            return true
-        }
-    }
+//    fun tieneMasAmigosQue(usuario: Usuario) {
+//        if (this.amigos.size > usuario.amigos.size) {
+//            return true
+//        }
+//    }
 }

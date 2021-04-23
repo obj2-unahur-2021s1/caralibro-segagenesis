@@ -3,13 +3,13 @@ package ar.edu.unahur.obj2.caralibro
 import kotlin.math.ceil
 
 abstract class Publicacion(var likes: Int) {
-var accesos = mutuableListOf<Usuario
+    var usuariosQueDieronLike = mutableListOf<Usuario>()
+    var accesos = mutableListOf<Usuario>()
     abstract fun espacioQueOcupa(): Int
-    fun agregarAcceso(persona: Usuario()){
+    fun agregarAcceso(persona: Usuario){
 
     }
 }
-
 
 class Foto(val alto: Int, val ancho: Int, likes: Int) : Publicacion(likes) {
     override fun espacioQueOcupa() = ceil(alto * ancho * factorCompresion.compresionActual).toInt()
@@ -44,4 +44,5 @@ object Calidad720p : CalidadVideo() {
 object Calidad1080p : CalidadVideo() {
     override fun espacioQueOcupa(video: Video) = Calidad720p.espacioQueOcupa(video) * 2
 }
+
 
