@@ -14,18 +14,28 @@ class Texto(val contenido: String) : Publicacion() {
   override fun espacioQueOcupa() = contenido.length
 }
 
-class Video(val duracion: Int) : Publicacion() {
-   override fun espacioQueOcupa() = 2
-
-   fun espacioQueOcupaSd() = this.duracion
-
-   fun espacioQueOcupaHd720p() = this.duracion * 3
-
-   fun espacioQueOcupaHd1080p() = this.espacioQueOcupaHd720p() * 2
-
+open class Video(val duracion: Int, var calidad: CalidadVideo ) : Publicacion() {
+   override fun espacioQueOcupa() = calidad.espacioQueOcupa(this)
 }
 
 object factorCompresion {
   var compresionActual = 0.7
+}
+
+abstract class CalidadVideo {
+    abstract fun espacioQueOcupa(video: Video) : Int
+}
+
+object CalidadSd : CalidadVideo() {
+    override fun espacioQueOcupa(video: Video) = video.duracion
+
+}
+
+object Calidad720p : CalidadVideo() {
+    override fun espacioQueOcupa(video: Video) = video.duracion * 3
+}
+
+object Calidad1080p : CalidadVideo() {
+    override fun espacioQueOcupa(video: Video) = Calidad720p.espacioQueOcupa(video) * 2
 }
 
