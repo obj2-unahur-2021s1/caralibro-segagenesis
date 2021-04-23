@@ -3,6 +3,7 @@ package ar.edu.unahur.obj2.caralibro
 class Usuario {
     val publicaciones = mutableListOf<Publicacion>()
     val amigos = mutableListOf<Usuario>()
+    val mejoresAmigos = mutableListOf<Usuario>()
 
     fun agregarPublicacion(publicacion: Publicacion) {
         publicaciones.add(publicacion)
@@ -29,9 +30,21 @@ class Usuario {
     fun puedeVerPublicacion(publicacion: Publicacion) = publicacion.permiso.puedeSerVistaPor(this)
 
 
-//    fun tieneMasAmigosQue(usuario: Usuario) {
-//        if (this.amigos.size > usuario.amigos.size) {
-//            return true
-//        }
-//    }
+    fun agregarMejorAmigo(usuarioMejorAmigo: Usuario) {
+        this.mejoresAmigos.add(usuarioMejorAmigo)
+        usuarioMejorAmigo.puedeVerPublicacion()
+    }
+
+    fun tieneComoMejorAmigoA(usuarioARevisar: Any) {
+        this.mejoresAmigos.contains(usuarioARevisar)
+    }
+
+    fun puedeVerTodasLasPublicaciones(): Boolean {
+        this.puedeVerPublicacion(publicaciones)
+
+    }
+
 }
+
+
+

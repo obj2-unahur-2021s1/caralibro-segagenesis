@@ -5,6 +5,7 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
+import kotlin.script.experimental.api.asSuccess
 
 class UsuarioTest : DescribeSpec({
   describe("Caralibro") {
@@ -102,29 +103,23 @@ class UsuarioTest : DescribeSpec({
       }
     }
 
-    describe("Cantidad de amigos") {
-      val francisco = Usuario()
-      val karen = Usuario()
-      val matias = Usuario()
-      val fernando = Usuario()
+    describe("Mejores amigos"){
+      val usuario = Usuario()
+      val usuarioAmigo = Usuario()
+      val usuarioMejorAmigo = Usuario()
+      val usuarioMejorAmigo2 = Usuario()
 
-      francisco.agregarAmigo(karen)
-      francisco.agregarAmigo(matias)
+      usuario.agregarAmigo(usuarioAmigo)
+      usuario.agregarMejorAmigo(usuarioMejorAmigo)
+      usuario.agregarMejorAmigo(usuarioMejorAmigo2)
 
-      it("dasfbv "){
-        //francisco.tieneMasAmigosQue(fernando).shouldBeTrue()
+      it ("Es mejor amigo"){
+        usuario.tieneComoMejorAmigoA(usuarioMejorAmigo).shouldBe(true)
       }
-    }
 
-    describe("Permisos de acceso"){
-      val karen = Usuario()
-       fotoEnCuzco.agregarAcceso(karen)
-// no cargaaaaaaaaaaaaa
-      it("Accesos a una publicacion"){
-        //karen.tieneAccesoA(fotoEnCuzco).shouldBeTrue()
-      }
-      it("Un usuario puede ver tal publicacion"){
-       // karen.puedeVer(fotoEnCuzco).shoulBeTrue()
+      it("Los mejores amigos pueden ver todas las publicaciones del usuario"){
+        val publicacionPublica = Foto(1920, 1080,0,Publico)
+        usuarioMejorAmigo2.puedeVerTodasLasPublicaciones().shouldBeTrue()
       }
     }
   }
