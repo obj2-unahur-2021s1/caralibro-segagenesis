@@ -71,9 +71,10 @@ class UsuarioTest : DescribeSpec({
     describe("Permisos de acceso"){
       val fotoEnCuzco = Foto(768, 1024,0)
       val karen = Usuario()
-
+       fotoEnCuzco.agregarAcceso(karen)
+// no cargaaaaaaaaaaaaa
       it("Accesos a una publicacion"){
-
+        karen.tieneAccesoA(fotoEnCuzco).shouldBeTrue()
       }
       it("Un usuario puede ver tal publicacion"){
         karen.puedeVer(fotoEnCuzco).shoulBeTrue()

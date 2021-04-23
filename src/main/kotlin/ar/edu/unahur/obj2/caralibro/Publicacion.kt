@@ -2,29 +2,34 @@ package ar.edu.unahur.obj2.caralibro
 
 import kotlin.math.ceil
 
-abstract class Publicacion(var likes : Int) {
+abstract class Publicacion(var likes: Int) {
+var accesos = mutuableListOf<Usuario
     abstract fun espacioQueOcupa(): Int
+    fun agregarAcceso(persona: Usuario()){
+
+    }
 }
 
-class Foto(val alto: Int, val ancho: Int, likes: Int ) : Publicacion(likes) {
-  override fun espacioQueOcupa() = ceil(alto * ancho * factorCompresion.compresionActual).toInt()
+
+class Foto(val alto: Int, val ancho: Int, likes: Int) : Publicacion(likes) {
+    override fun espacioQueOcupa() = ceil(alto * ancho * factorCompresion.compresionActual).toInt()
 
 }
 
-class Texto(val contenido: String,likes: Int) : Publicacion(likes) {
-  override fun espacioQueOcupa() = contenido.length
+class Texto(val contenido: String, likes: Int) : Publicacion(likes) {
+    override fun espacioQueOcupa() = contenido.length
 }
 
-open class Video(val duracion: Int, var calidad: CalidadVideo,likes: Int ) : Publicacion(likes) {
-   override fun espacioQueOcupa() = calidad.espacioQueOcupa(this)
+open class Video(val duracion: Int, var calidad: CalidadVideo, likes: Int) : Publicacion(likes) {
+    override fun espacioQueOcupa() = calidad.espacioQueOcupa(this)
 }
 
 object factorCompresion {
-  var compresionActual = 0.7
+    var compresionActual = 0.7
 }
 
 abstract class CalidadVideo {
-    abstract fun espacioQueOcupa(video: Video) : Int
+    abstract fun espacioQueOcupa(video: Video): Int
 }
 
 object CalidadSd : CalidadVideo() {
