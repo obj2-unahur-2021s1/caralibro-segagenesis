@@ -83,7 +83,8 @@ class UsuarioTest : DescribeSpec({
         it("Cuando su permiso es publico"){
           val publicacionPublica = Foto(1920, 1080,0,Publico)
           val usuario = Usuario()
-          usuario.puedeVerPublicacion(publicacionPublica).shouldBeTrue()
+          val usuario2 = Usuario()
+          usuario.puedeVerPublicacion(publicacionPublica,usuario2).shouldBeTrue()
         }
         describe("Cuando su permiso es de solo amigos") {
           it("El usuario pertenece a la lista de amigos del creador de la publicacion") {
@@ -91,21 +92,27 @@ class UsuarioTest : DescribeSpec({
             val usuario = Usuario()
             val usuarioAmigo = Usuario()
             usuarioAmigo.agregarAmigo(usuario)
-            usuario.puedeVerPublicacion(publicacionSoloAmigos).shouldBeTrue()
+            usuario.puedeVerPublicacion(publicacionSoloAmigos,usuarioAmigo).shouldBeTrue()
           }
           it("El usuario no pertence a la lista de amigos del creador de la publicacion") {
             val publicacionSoloAmigos = Foto(1920,1080,0,SoloAmigos)
             val usuario = Usuario()
             val usuario2 = Usuario()
-            usuario2.amigos.contains(usuario).shouldBeFalse()
-            usuario.puedeVerPublicacion(publicacionSoloAmigos).shouldBeFalse()
+            usuario.puedeVerPublicacion(publicacionSoloAmigos,usuario2).shouldBeFalse()
           }
         }
-        it("Cuando su permiso es privado con lista de permitidos") {
 
-        }
-        it("Cuando su permiso es publico con lista de excluidos") {
-
+        describe("Cuando su permiso es privado Con lista de permitidos") {
+          val publicacioPrivadanConListaPermitidos = Foto(1920,1080,0,PrivadoConListaDePermitidos)
+          val usuario = Usuario()
+          val usuario2 = Usuario()
+          it("El usuario esta en la lista de permitidos del usuario al que quiere ver la publcacion") {
+            usuario2.agregarAListaPermitidos(usuario)
+            usuario.puedeVerPublicacion(publicacioPrivadanConListaPermitidos,usuario2).shouldBeTrue()
+          }
+         it("El usuario no esta en la lista de permitidos del usuario al que quiere ver la publicacion") {
+           usuario.puedeVerPublicacion(publicacioPrivadanConListaPermitidos,usuario2).shouldBeFalse()
+         }
         }
       }
     }

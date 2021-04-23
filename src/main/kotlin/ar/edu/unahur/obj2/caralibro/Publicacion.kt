@@ -8,8 +8,7 @@ abstract class Publicacion(var likes: Int, var permiso: Permiso) {
 
     abstract fun espacioQueOcupa(): Int
 
-    fun puedeSerVistaPor(usuario: Usuario) = usuario.puedeVerPublicacion(this ,usuario)
-
+    fun puedeSerVistaPor(usuario: Usuario,usuarioQueDeseaVerPublicacion:Usuario) = this.permiso.puedeSerVistaPor(usuario,usuarioQueDeseaVerPublicacion)
 }
 
 class Foto(val alto: Int, val ancho: Int, likes: Int, permiso: Permiso) : Publicacion(likes, permiso) {
@@ -44,18 +43,22 @@ object Calidad1080p : CalidadVideo() {
     override fun espacioQueOcupa(video: Video) = Calidad720p.espacioQueOcupa(video) * 2
 }
 
-abstract class Permiso() {
-    abstract fun puedeSerVistaPor(usuario: Usuario) : Boolean
+abstract class Permiso {
+    abstract fun puedeSerVistaPor(usuario: Usuario,usuario2:Usuario) : Boolean
 }
 
 object Publico: Permiso() {
-    override fun puedeSerVistaPor(usuario: Usuario) = true
+    override fun puedeSerVistaPor(usuario: Usuario,usuario2:Usuario) = true
 }
 
 object SoloAmigos: Permiso() {
-    override fun puedeSerVistaPor(usuario: Usuario) = usuario.puedeSerVistaPor(usuario)
-
-
+    override fun puedeSerVistaPor(usuario: Usuario,usuario2:Usuario) = usuario2.amigos.contains(usuario)
 }
 
+object PrivadoConListaDePermitidos: Permiso() {
+    override fun puedeSerVistaPor(usuario: Usuario,usuario2:Usuario) = usuario2.listaPermitidos.contains(usuario)
+}
 
+object PublicoConListaDeExcluidos: Permiso() {
+    override fun puedeSerVistaPor(usuario: Usuario, usuario2: Usuario) = !usuario2.listaExcluidos.contains(usuario)
+}
