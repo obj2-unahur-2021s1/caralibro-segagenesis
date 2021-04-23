@@ -7,23 +7,19 @@ abstract class Publicacion {
 }
 
 class Foto(val alto: Int, val ancho: Int) : Publicacion() {
-  val factorDeCompresion = 0.7
-  override fun espacioQueOcupa() = ceil(alto * ancho * factorDeCompresion).toInt()
+  override fun espacioQueOcupa() = ceil(alto * ancho * factorCompresion.compresionActual).toInt()
 }
 
 class Texto(val contenido: String) : Publicacion() {
   override fun espacioQueOcupa() = contenido.length
 }
-
 class Video(val calidad: Int,val duracion: Int) : Publicacion() {
-  override fun espacioQueOcupa(){
-    if(calidad==SD){
-      return duracion
-    }
-    elseif (calidad==720){
-      return duracion * 3
-    }
-    elseif (calidad==1080){
-      return (duracion * 3) * 2
-    }
+   override fun espacioQueOcupa() = 2
+
 }
+
+object factorCompresion {
+  var compresionActual = 0.7
+
+ }
+
