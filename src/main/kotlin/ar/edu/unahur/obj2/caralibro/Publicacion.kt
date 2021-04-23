@@ -5,13 +5,15 @@ import kotlin.math.ceil
 abstract class Publicacion(var likes: Int, var permiso: Permiso) {
     var usuariosQueDieronLike = mutableListOf<Usuario>()
     var accesos = mutableListOf<Usuario>()
+
     abstract fun espacioQueOcupa(): Int
-    fun agregarAcceso(persona: Usuario){
-    }
+
+    fun puedeSerVistaPor(usuario: Usuario) = usuario.puedeVerPublicacion(this ,usuario)
+
 }
 
 class Foto(val alto: Int, val ancho: Int, likes: Int, permiso: Permiso) : Publicacion(likes, permiso) {
-    override fun espacioQueOcupa() = ceil(alto * ancho * factorCompresion.compresionActual).toInt()
+    override fun espacioQueOcupa() = ceil(alto * ancho * FactorCompresion.compresionActual).toInt()
 }
 
 class Texto(val contenido: String, likes: Int, permiso: Permiso) : Publicacion(likes, permiso) {
@@ -22,7 +24,7 @@ open class Video(val duracion: Int, var calidad: CalidadVideo, likes: Int, permi
     override fun espacioQueOcupa() = calidad.espacioQueOcupa(this)
 }
 
-object factorCompresion {
+object FactorCompresion {
     var compresionActual = 0.7
 }
 
@@ -32,7 +34,6 @@ abstract class CalidadVideo {
 
 object CalidadSd : CalidadVideo() {
     override fun espacioQueOcupa(video: Video) = video.duracion
-
 }
 
 object Calidad720p : CalidadVideo() {
@@ -48,7 +49,12 @@ abstract class Permiso() {
 }
 
 object Publico: Permiso() {
-    override fun puedeSerVistaPor(usuario:Usuario) = true
+    override fun puedeSerVistaPor(usuario: Usuario) = true
+}
+
+object SoloAmigos: Permiso() {
+    override fun puedeSerVistaPor(usuario: Usuario) = usuario.puedeSerVistaPor(usuario)
+
 
 }
 

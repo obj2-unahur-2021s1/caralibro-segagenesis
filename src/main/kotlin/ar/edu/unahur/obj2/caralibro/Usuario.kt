@@ -26,12 +26,7 @@ class Usuario {
 
     fun esMasAmistosoQue(usuario: Usuario) = this.amigos.count() > usuario.amigos.count()
 
-    fun puedeVerPublicacion(publicacion: Publicacion) = publicacion.permiso.puedeSerVistaPor(this)
+    fun puedeVerPublicacion(publicacion: Publicacion,usuario: Usuario) = this.amigos.contains(usuario)
 
 
-//    fun tieneMasAmigosQue(usuario: Usuario) {
-//        if (this.amigos.size > usuario.amigos.size) {
-//            return true
-//        }
-//    }
 }

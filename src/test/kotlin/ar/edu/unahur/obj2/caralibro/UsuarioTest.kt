@@ -87,10 +87,18 @@ class UsuarioTest : DescribeSpec({
         }
         describe("Cuando su permiso es de solo amigos") {
           it("El usuario pertenece a la lista de amigos del creador de la publicacion") {
-
+            val publicacionSoloAmigos = Foto(1920,1080,0,SoloAmigos)
+            val usuario = Usuario()
+            val usuarioAmigo = Usuario()
+            usuarioAmigo.agregarAmigo(usuario)
+            usuario.puedeVerPublicacion(publicacionSoloAmigos).shouldBeTrue()
           }
           it("El usuario no pertence a la lista de amigos del creador de la publicacion") {
-
+            val publicacionSoloAmigos = Foto(1920,1080,0,SoloAmigos)
+            val usuario = Usuario()
+            val usuario2 = Usuario()
+            usuario2.amigos.contains(usuario).shouldBeFalse()
+            usuario.puedeVerPublicacion(publicacionSoloAmigos).shouldBeFalse()
           }
         }
         it("Cuando su permiso es privado con lista de permitidos") {
@@ -111,21 +119,9 @@ class UsuarioTest : DescribeSpec({
       francisco.agregarAmigo(karen)
       francisco.agregarAmigo(matias)
 
-      it("dasfbv "){
-        //francisco.tieneMasAmigosQue(fernando).shouldBeTrue()
+      it("a"){
       }
     }
 
-    describe("Permisos de acceso"){
-      val karen = Usuario()
-       fotoEnCuzco.agregarAcceso(karen)
-// no cargaaaaaaaaaaaaa
-      it("Accesos a una publicacion"){
-        //karen.tieneAccesoA(fotoEnCuzco).shouldBeTrue()
-      }
-      it("Un usuario puede ver tal publicacion"){
-       // karen.puedeVer(fotoEnCuzco).shoulBeTrue()
-      }
-    }
   }
 })
