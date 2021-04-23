@@ -8,9 +8,9 @@ import io.kotest.matchers.shouldBe
 
 class UsuarioTest : DescribeSpec({
   describe("Caralibro") {
-    val saludoCumpleanios = Texto("Felicidades Pepito, que los cumplas muy feliz",0)
-    val fotoEnCuzco = Foto(768, 1024,0)
-    val video = Video(23,CalidadSd, 0)
+    val saludoCumpleanios = Texto("Felicidades Pepito, que los cumplas muy feliz",0,Publico)
+    val fotoEnCuzco = Foto(768, 1024,0,Publico)
+    val video = Video(23,CalidadSd, 0,Publico)
 
     describe("Una publicación") {
       describe("de tipo foto") {
@@ -71,7 +71,7 @@ class UsuarioTest : DescribeSpec({
         usuarioAmistoso.agregarAmigo(usuarioAmigo2)
         usuarioNoAmistoso.agregarAmigo(usuarioAmigo)
 
-        it("Cuando el primero tiene mas amigos") {
+        it("Cuando el primer usuario tiene mas amigos") {
           usuarioAmistoso.esMasAmistosoQue(usuarioNoAmistoso).shouldBeTrue()
         }
         it("No lo es cuando el segundo usuario tiene mas amigos") {
@@ -79,6 +79,27 @@ class UsuarioTest : DescribeSpec({
         }
       }
 
+      describe("Puede ver una cierta publicacion") {
+        it("Cuando su permiso es publico"){
+          val publicacionPublica = Foto(1920, 1080,0,Publico)
+          val usuario = Usuario()
+          usuario.puedeVerPublicacion(publicacionPublica).shouldBeTrue()
+        }
+        describe("Cuando su permiso es de solo amigos") {
+          it("El usuario pertenece a la lista de amigos del creador de la publicacion") {
+
+          }
+          it("El usuario no pertence a la lista de amigos del creador de la publicacion") {
+
+          }
+        }
+        it("Cuando su permiso es privado con lista de permitidos") {
+
+        }
+        it("Cuando su permiso es publico con lista de excluidos") {
+
+        }
+      }
     }
 
     describe("Cantidad de amigos") {
@@ -90,13 +111,12 @@ class UsuarioTest : DescribeSpec({
       francisco.agregarAmigo(karen)
       francisco.agregarAmigo(matias)
 
-      it("das"){
+      it("dasfbv "){
         //francisco.tieneMasAmigosQue(fernando).shouldBeTrue()
       }
     }
 
     describe("Permisos de acceso"){
-      val fotoEnCuzco = Foto(768, 1024,0)
       val karen = Usuario()
        fotoEnCuzco.agregarAcceso(karen)
 // no cargaaaaaaaaaaaaa
