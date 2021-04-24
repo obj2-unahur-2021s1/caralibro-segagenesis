@@ -5,7 +5,6 @@ class Usuario {
     val amigos = mutableListOf<Usuario>()
     val listaPermitidos = mutableListOf<Usuario>()
     val listaExcluidos = mutableListOf<Usuario>()
-    val mejoresAmigos = mutableListOf<Usuario>()
 
     fun agregarPublicacion(publicacion: Publicacion) {
         publicaciones.add(publicacion)
@@ -41,14 +40,7 @@ class Usuario {
     fun amigoMasPopular() = this.amigos.maxByOrNull { it.cantidadLikes() }
 
     fun esMejorAmigo(usuarioMejorAmigo: Usuario): Boolean {
-        return this.mejoresAmigos.find { usuario: Usuario -> usuario == usuarioMejorAmigo } == usuarioMejorAmigo
-    }
-
-    fun pasarAMejorAmigo(usuarioMejorAmigo: Usuario) {
-        if (this.amigos.any { usuario: Usuario -> usuario == usuarioMejorAmigo }) {
-            this.amigos.remove(usuarioMejorAmigo)
-            this.mejoresAmigos.add(usuarioMejorAmigo)
-        }
+        return this.amigos.find { usuario: Usuario -> usuario == usuarioMejorAmigo } == usuarioMejorAmigo
     }
 
     fun publicacionesVistasPor(usuario: Usuario) =

@@ -155,8 +155,6 @@ class UsuarioTest : DescribeSpec({
       usuario.agregarAmigo(usuarioAmigo1)
       usuario.agregarAmigo(usuarioMejorAmigo1)
       usuario.agregarAmigo(usuarioMejorAmigo2)
-      usuario.pasarAMejorAmigo(usuarioMejorAmigo1)
-      usuario.pasarAMejorAmigo(usuarioMejorAmigo2)
       usuario.agregarPublicacion(fotoEnCuzco)
 
       it("Verificar si el usuario esta en los mejores amigos"){
