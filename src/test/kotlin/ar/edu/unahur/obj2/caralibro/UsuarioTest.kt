@@ -102,7 +102,7 @@ class UsuarioTest : DescribeSpec({
           }
         }
 
-        describe("Cuando su permiso es privado Con lista de permitidos") {
+        describe("Cuando el permiso de la publicacion es privado Con lista de permitidos") {
           val publicacioPrivadanConListaPermitidos = Foto(1920,1080,0,PrivadoConListaDePermitidos)
           val usuario = Usuario()
           val usuario2 = Usuario()
@@ -110,9 +110,21 @@ class UsuarioTest : DescribeSpec({
             usuario2.agregarAListaPermitidos(usuario)
             usuario.puedeVerPublicacion(publicacioPrivadanConListaPermitidos,usuario2).shouldBeTrue()
           }
-         it("El usuario no esta en la lista de permitidos del usuario al que quiere ver la publicacion") {
+         it("Caso contrario el usuario no esta en la lista de permitidos del usuario al que quiere ver la publicacion") {
            usuario.puedeVerPublicacion(publicacioPrivadanConListaPermitidos,usuario2).shouldBeFalse()
          }
+        }
+        describe("Cuando el permiso de la publicacion es publico Con lista de excluidos") {
+          val publicacionPublicaConListaExcluidos = Foto(1920,1080,0,PublicoConListaDeExcluidos)
+          val usuario = Usuario()
+          val usuario2 = Usuario()
+          it("El usuario esta en la lista de excluidos del usuario al que quiere ver la publcacion"){
+            usuario2.agregarAListaExcluidos(usuario)
+            usuario.puedeVerPublicacion(publicacionPublicaConListaExcluidos,usuario2).shouldBeFalse()
+          }
+          it("El usuario no esta en la lista de excluidos del usuario al que quiere ver la publcacion") {
+            usuario.puedeVerPublicacion(publicacionPublicaConListaExcluidos,usuario2).shouldBeTrue()
+          }
         }
 
         it("El amigo mas popular que tiene agregado el usuario") {
@@ -127,6 +139,7 @@ class UsuarioTest : DescribeSpec({
           usuarioPopular.agregarPublicacion(publicacionVideo)
           usuario.agregarAmigo(usuarioPopular)
           usuario.agregarAmigo(usuarioMasPopular)
+
           usuario.amigoMasPopular().shouldBe(usuarioPopular)
 
         }
