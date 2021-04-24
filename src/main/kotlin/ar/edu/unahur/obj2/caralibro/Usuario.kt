@@ -34,9 +34,8 @@ class Usuario {
 
     fun puedeVerPublicacion(publicacion: Publicacion,usuarioQueDeseaVerPublicacion: Usuario) = publicacion.puedeSerVistaPor(this,usuarioQueDeseaVerPublicacion)
 
-    fun likesTotales() = this.publicaciones.map { it.likesTotales() }.sum()
+    fun cantidadLikes() = this.publicaciones.map { it.likes }.sum()
 
-    fun amigoMasPopular() = this.amigos.maxByOrNull { it.likesTotales() }
-
+    fun amigoMasPopular() = this.amigos.maxByOrNull { it.cantidadLikes() }
 
 }

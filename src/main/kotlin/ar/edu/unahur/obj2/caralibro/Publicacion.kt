@@ -9,8 +9,6 @@ abstract class Publicacion(var likes: Int, var permiso: Permiso) {
     abstract fun espacioQueOcupa(): Int
 
     fun puedeSerVistaPor(usuario: Usuario,usuarioQueDeseaVerPublicacion:Usuario) = this.permiso.puedeSerVistaPor(usuario,usuarioQueDeseaVerPublicacion)
-
-    fun likesTotales() = this.likes
 }
 
 class Foto(val alto: Int, val ancho: Int, likes: Int, permiso: Permiso) : Publicacion(likes, permiso) {
