@@ -62,3 +62,6 @@ object PrivadoConListaDePermitidos: Permiso() {
 object PublicoConListaDeExcluidos: Permiso() {
     override fun puedeSerVistaPor(usuario: Usuario, usuario2: Usuario) = !usuario2.listaExcluidos.contains(usuario)
 }
+
+
+

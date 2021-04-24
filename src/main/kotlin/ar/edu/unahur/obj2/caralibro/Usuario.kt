@@ -5,6 +5,7 @@ class Usuario {
     val amigos = mutableListOf<Usuario>()
     val listaPermitidos = mutableListOf<Usuario>()
     val listaExcluidos = mutableListOf<Usuario>()
+    val mejoresAmigos = mutableListOf<Usuario>()
 
     fun agregarPublicacion(publicacion: Publicacion) {
         publicaciones.add(publicacion)
@@ -18,7 +19,7 @@ class Usuario {
 
     fun darLike(publicacion: Publicacion) {
         if (this.dioLikeEn(publicacion)) {
-            throw Exception ("Ya le has dado like a esta publicacion")
+            throw Exception("Ya le has dado like a esta publicacion")
         }
         publicacion.likes += 1
         publicacion.usuariosQueDieronLike.add(this)
@@ -32,10 +33,36 @@ class Usuario {
 
     fun esMasAmistosoQue(usuario: Usuario) = this.amigos.count() > usuario.amigos.count()
 
-    fun puedeVerPublicacion(publicacion: Publicacion,usuarioQueDeseaVerPublicacion: Usuario) = publicacion.puedeSerVistaPor(this,usuarioQueDeseaVerPublicacion)
+    fun puedeVerPublicacion(publicacion: Publicacion, usuarioQueDeseaVerPublicacion: Usuario) =
+        publicacion.puedeSerVistaPor(this, usuarioQueDeseaVerPublicacion)
 
     fun cantidadLikes() = this.publicaciones.map { it.likes }.sum()
 
     fun amigoMasPopular() = this.amigos.maxByOrNull { it.cantidadLikes() }
 
+    fun esMejorAmigo(usuarioMejorAmigo: Usuario): Boolean {
+        return this.mejoresAmigos.find { usuario: Usuario -> usuario == usuarioMejorAmigo } == usuarioMejorAmigo
+    }
+
+    fun pasarAMejorAmigo(usuarioMejorAmigo: Usuario) {
+        if (this.amigos.any { usuario: Usuario -> usuario == usuarioMejorAmigo }) {
+            this.amigos.remove(usuarioMejorAmigo)
+            this.mejoresAmigos.add(usuarioMejorAmigo)
+        }
+    }
+
+    fun publicacionesVistasPor(usuario: Usuario) =
+        this.publicaciones.filter { publicacion: Publicacion -> usuario.dioLikeEn(publicacion) }
+
+    fun noventaPorcientoDeLasPublicaciones() = this.publicaciones.size * 0.9
+
+    fun esStalker(usuario: Usuario): Boolean {
+        return this.publicacionesVistasPor(usuario).size >= this.noventaPorcientoDeLasPublicaciones()
+    }
+
 }
+
+
+
+
+

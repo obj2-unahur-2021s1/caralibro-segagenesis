@@ -146,18 +146,69 @@ class UsuarioTest : DescribeSpec({
       }
     }
 
-    describe("Cantidad de amigos") {
-      val francisco = Usuario()
-      val karen = Usuario()
-      val matias = Usuario()
-      val fernando = Usuario()
+    describe("Los mejores amigos"){
+      val usuario = Usuario()
+      val usuarioAmigo1 = Usuario()
+      val usuarioMejorAmigo1 = Usuario()
+      val usuarioMejorAmigo2 = Usuario()
 
-      francisco.agregarAmigo(karen)
-      francisco.agregarAmigo(matias)
+      usuario.agregarAmigo(usuarioAmigo1)
+      usuario.agregarAmigo(usuarioMejorAmigo1)
+      usuario.agregarAmigo(usuarioMejorAmigo2)
+      usuario.pasarAMejorAmigo(usuarioMejorAmigo1)
+      usuario.pasarAMejorAmigo(usuarioMejorAmigo2)
+      usuario.agregarPublicacion(fotoEnCuzco)
 
-      it("a"){
+      it("Verificar si el usuario esta en los mejores amigos"){
+        usuario.esMejorAmigo(usuarioMejorAmigo1).shouldBe(true)
+      }
+      it("Mejor amigo puede ver sus publicaciones"){
+        usuario.agregarPublicacion(fotoEnCuzco)
+        usuario.puedeVerPublicacion(fotoEnCuzco,usuarioMejorAmigo1).shouldBeTrue()
       }
     }
 
+    describe("El stalker del usuario"){
+      val usuario = Usuario()
+      val usuario1 = Usuario()
+      val fotoEnCuzco1 = Foto(768, 1024,0,Publico)
+      val fotoEnCuzco2 = Foto(768, 1024,0,Publico)
+      val fotoEnCuzco3 = Foto(768, 1024,0,Publico)
+      val fotoEnCuzco4 = Foto(768, 1024,0,Publico)
+      val fotoEnCuzco5 = Foto(768, 1024,0,Publico)
+      val fotoEnCuzco6 = Foto(768, 1024,0,Publico)
+      val fotoEnCuzco7 = Foto(768, 1024,0,Publico)
+      val fotoEnCuzco8 = Foto(768, 1024,0,Publico)
+      val fotoEnCuzco9 = Foto(768, 1024,0,Publico)
+      val fotoEnCuzco10 = Foto(768, 1024,0,Publico)
+
+      usuario.agregarPublicacion(fotoEnCuzco1)
+      usuario.agregarPublicacion(fotoEnCuzco2)
+      usuario.agregarPublicacion(fotoEnCuzco3)
+      usuario.agregarPublicacion(fotoEnCuzco4)
+      usuario.agregarPublicacion(fotoEnCuzco5)
+      usuario.agregarPublicacion(fotoEnCuzco6)
+      usuario.agregarPublicacion(fotoEnCuzco7)
+      usuario.agregarPublicacion(fotoEnCuzco8)
+      usuario.agregarPublicacion(fotoEnCuzco9)
+      usuario.agregarPublicacion(fotoEnCuzco10)
+      usuario1.darLike(fotoEnCuzco1)
+      usuario1.darLike(fotoEnCuzco2)
+      usuario1.darLike(fotoEnCuzco3)
+      usuario1.darLike(fotoEnCuzco4)
+      usuario1.darLike(fotoEnCuzco5)
+      usuario1.darLike(fotoEnCuzco6)
+      usuario1.darLike(fotoEnCuzco7)
+      usuario1.darLike(fotoEnCuzco8)
+      usuario1.darLike(fotoEnCuzco9)
+
+      it("noventa por ciento de las publicaciones"){
+        usuario.noventaPorcientoDeLasPublicaciones().shouldBe(9)
+      }
+
+      it("Verifica si el usuario es Stalker"){
+        usuario.esStalker(usuario1).shouldBeTrue()
+      }
+    }
   }
 })
