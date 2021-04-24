@@ -114,6 +114,22 @@ class UsuarioTest : DescribeSpec({
            usuario.puedeVerPublicacion(publicacioPrivadanConListaPermitidos,usuario2).shouldBeFalse()
          }
         }
+
+        it("El amigo mas popular que tiene agregado el usuario") {
+          val publicacionFoto = Foto(1920,1080,4,Publico)
+          val publicacionTexto = Texto("Hola a todos",1,Publico)
+          val publicacionVideo = Video (25,Calidad1080p,3,Publico)
+          val usuario = Usuario()
+          val usuarioMasPopular = Usuario()
+          val usuarioPopular = Usuario()
+          usuarioPopular.agregarPublicacion(publicacionFoto)
+          usuarioPopular.agregarPublicacion(publicacionTexto)
+          usuarioPopular.agregarPublicacion(publicacionVideo)
+          usuario.agregarAmigo(usuarioPopular)
+          usuario.agregarAmigo(usuarioMasPopular)
+          usuario.amigoMasPopular().shouldBe(usuarioPopular)
+
+        }
       }
     }
 
