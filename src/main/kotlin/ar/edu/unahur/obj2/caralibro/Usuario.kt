@@ -49,11 +49,10 @@ class Usuario {
     fun noventaPorcientoDeLasPublicaciones() = this.publicaciones.size * 0.9
 
     fun esStalker(usuario: Usuario): Boolean {
-        return this.publicacionesVistasPor(usuario).size >= this.noventaPorcientoDeLasPublicaciones()
+        return this.publicacionesVistasPor(usuario).size > this.noventaPorcientoDeLasPublicaciones()
     }
 
 }
-
 
 
 
